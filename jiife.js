@@ -15,11 +15,16 @@ function processFile(filePath, newLines){
     })
 }
 const newLines = [];
-processFile('templ-mount.js', newLines);
-let newContent = `
-//@ts-check
-(function () {
-${newLines.join('\n')}
-})();  
-    `;
-fs.writeFileSync("first-templ-mount.js", newContent, 'utf8');
+exports.processFiles = function(filePaths, outputFilePath){
+    filePaths.forEach(filePath  =>{
+        processFile(filePath, newLines);
+    })
+    const newContent = `
+    //@ts-check
+    (function () {
+    ${newLines.join('\n')}
+    })();  
+        `;
+    fs.writeFileSync(outputFilePath, newContent, 'utf8');
+}
+
