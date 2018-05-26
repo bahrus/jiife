@@ -1,0 +1,12 @@
+{
+  "name": "jiife",
+  "version": "0.0.0",
+  "description": "Turn ES6 Modules into an iife file ",
+  "main": "jiife.js",
+  "repository": "https://github.com/bahrus/jiife",
+  "author": "bahrus <anderson.bruce.b@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^10.1.2"
+  }
+}
