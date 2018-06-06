@@ -5,6 +5,7 @@ function processFile(filePath, newLines){
     const lines = contents.split('\n');
     lines.forEach(line =>{
         const tl = line.trimLeft();
+        if(line.indexOf('import.meta') > -1) return;
         if(tl.startsWith('import ')) return;
         if(tl.startsWith('export ')){
             newLines.push(line.replace('export ', ''));
