@@ -15,7 +15,7 @@ function processFile(filePath, newLines){
         
     })
 }
-const newLines = [];
+let newLines = [];
 exports.processFiles = function(filePaths, outputFilePath){
     filePaths.forEach(filePath  =>{
         processFile(filePath, newLines);
@@ -27,5 +27,6 @@ exports.processFiles = function(filePaths, outputFilePath){
     })();  
         `;
     fs.writeFileSync(outputFilePath, newContent, 'utf8');
+    newLines = [];
 }
 
