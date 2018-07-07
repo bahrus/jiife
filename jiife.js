@@ -30,3 +30,17 @@ exports.processFiles = function(filePaths, outputFilePath){
     newLines = [];
 }
 
+function addFile(filePath, newLines){
+    const contents = fs.readFileSync(filePath, 'utf8');
+    const lines = contents.split('\n');
+    lines.forEach(line =>{
+        newLines.push(line);
+    })
+}
+
+exports.addFiles = function(filePaths){
+    filePaths.forEach(filePath  => {
+        addFile(filePath, newLines);
+    })
+}
+
