@@ -3,17 +3,24 @@ const fs = require('fs')
 function processFile(filePath, newLines){
     const contents = fs.readFileSync(filePath, 'utf8');
     const lines = contents.split('\n');
+    let inTaggedLiteral = false;
     lines.forEach(line =>{
         const tl = line.trimLeft();
         if(line.indexOf('import.meta') > -1) return;
         if(line.indexOf('//# sourceMappingURL') > -1) return;
-        if(tl.startsWith('import ')) return;
+        if(!inTaggedLiteral){
+            if(tl.startsWith('import ')) return;
+        }
         if(tl.startsWith('export ')){
             newLines.push(line.replace('export ', ''));
         }else{
             newLines.push(line);
         }
-        
+        if(line.trimRight().endsWith('`')){
+            inTaggedLiteral = true;
+        }else if(line.trimRight().endsWith('`;')){
+            inTaggedLiteral = false; 
+        }
     })
 }
 let newLines = [];
