@@ -6,6 +6,9 @@
   "repository": "https://github.com/bahrus/jiife",
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
+  "dependencies": {
+    "terser": "3.10.11"
+  },
   "devDependencies": {
     "@types/node": "^10.1.2"
   }

@@ -1,5 +1,6 @@
 //@ts-check
-const fs = require('fs')
+const fs = require('fs');
+const Terser = require("terser");
 function processFile(filePath, newLines){
     const contents = fs.readFileSync(filePath, 'utf8');
     const lines = contents.split('\n');
@@ -35,6 +36,8 @@ exports.processFiles = function(filePaths, outputFilePath){
     })();  
         `;
     fs.writeFileSync(outputFilePath, newContent, 'utf8');
+    const minContent = Terser.minify(newContent).code;
+    fs.writeFileSync(outputFilePath.replace('.js', '.min.js'), minContent, 'utf8');
     newLines = [];
 }
 
