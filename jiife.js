@@ -1,18 +1,20 @@
 //@ts-check
 const fs = require('fs');
 const Terser = require("terser");
-function processFile(filePath, newLines){
+function processFile(filePath, newLines, skipIIFE){
     const contents = fs.readFileSync(filePath, 'utf8');
     const lines = contents.split('\n');
     let inTaggedLiteral = false;
     lines.forEach(line =>{
         const tl = line.trimLeft();
-        if(line.indexOf('import.meta') > -1) return;
+        if(!skipIIFE){
+            if(line.indexOf('import.meta') > -1) return;
+        }
         if(line.indexOf('//# sourceMappingURL') > -1) return;
-        if(!inTaggedLiteral){
+        if(!inTaggedLiteral && !skipIIFE){
             if(tl.startsWith('import ')) return;
         }
-        if(tl.startsWith('export ')){
+        if(tl.startsWith('export ') && !skipIIFE){
             newLines.push(line.replace('export ', ''));
         }else{
             newLines.push(line);
@@ -25,11 +27,11 @@ function processFile(filePath, newLines){
     })
 }
 let newLines = [];
-exports.processFiles = function(filePaths, outputFilePath){
+exports.processFiles = function(filePaths, outputFilePath, skipIIFE){
     filePaths.forEach(filePath  =>{
-        processFile(filePath, newLines);
+        processFile(filePath, newLines, skipIIFE);
     })
-    const newContent = `
+    const newContent = skipIIFE ? newLines.join('\n') : `
     //@ts-check
     (function () {
     ${newLines.join('\n')}
