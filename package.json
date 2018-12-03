@@ -7,7 +7,7 @@
   "author": "bahrus <anderson.bruce.b@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "terser": "3.10.12"
+    "terser": "3.11.0"
   },
   "devDependencies": {
     "@types/node": "^10.1.2"
