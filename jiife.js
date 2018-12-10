@@ -7,9 +7,6 @@ function processFile(filePath, newLines, skipIIFE){
     let inTaggedLiteral = false;
     lines.forEach(line =>{
         const tl = line.trimLeft();
-        if(!skipIIFE){
-            if(line.indexOf('import.meta') > -1) return;
-        }
         if(line.indexOf('//# sourceMappingURL') > -1) return;
         if(!inTaggedLiteral && !skipIIFE){
             if(tl.startsWith('import ')) return;
