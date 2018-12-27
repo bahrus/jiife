@@ -5,7 +5,14 @@ function processFile(filePath, newLines, skipIIFE){
     const contents = fs.readFileSync(filePath, 'utf8');
     const lines = contents.split('\n');
     let inTaggedLiteral = false;
+    const constants = {};
     lines.forEach(line =>{
+        if(line.startsWith('const ')){
+            const parsed = line.split(' ');
+            const newConst = parsed[1];
+            if(constants[newConst]) return;
+            constants[newConst] = true;
+        }
         const tl = line.trimLeft();
         if(line.indexOf('//# sourceMappingURL') > -1) return;
         if(!inTaggedLiteral && !skipIIFE){
