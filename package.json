@@ -1,6 +1,6 @@
 {
   "name": "jiife",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Turn ES6 Modules into an iife file ",
   "main": "jiife.js",
   "repository": "https://github.com/bahrus/jiife",
