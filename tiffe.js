@@ -5,12 +5,16 @@ function processFile(filePath, newLines){
     const lines = contents.split('\n');
     let inTaggedLiteral = false;
     const constants = {};
+    const types = {};
     lines.forEach(line =>{
         if(line.startsWith('const ')){
             const parsed = line.split(' ');
             const newConst = parsed[1];
             if(constants[newConst]) return;
             constants[newConst] = true;
+        }else if(line.startsWith('type ')){
+            if(types[line]) return;
+            types[line] = true;
         }
         const tl = line.trimLeft();
         if(line.indexOf('//# sourceMappingURL') > -1) return;
