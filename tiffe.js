@@ -1,11 +1,13 @@
 //@ts-check
 const fs = require('fs');
+let constants = {};
+let types = {};
 function processFile(filePath, newLines){
     const contents = fs.readFileSync(filePath, 'utf8');
     const lines = contents.split('\n');
     let inTaggedLiteral = false;
-    const constants = {};
-    const types = {};
+    // const constants = {};
+    // const types = {};
     lines.forEach(line =>{
         if(line.startsWith('const ')){
             const parsed = line.split(' ');
@@ -35,6 +37,8 @@ function processFile(filePath, newLines){
 }
 let newLines = [];
 exports.processFiles = function(filePaths, outputFilePath){
+    constants = {};
+    types = {};
     filePaths.forEach(filePath  =>{
         processFile(filePath, newLines);
     })

@@ -1,11 +1,12 @@
 //@ts-check
 const fs = require('fs');
 const Terser = require("terser");
+let constants = {};
 function processFile(filePath, newLines, skipIIFE){
     const contents = fs.readFileSync(filePath, 'utf8');
     const lines = contents.split('\n');
     let inTaggedLiteral = false;
-    const constants = {};
+    //const constants = {};
     lines.forEach(line =>{
         if(line.startsWith('const ')){
             const parsed = line.split(' ');
@@ -32,6 +33,7 @@ function processFile(filePath, newLines, skipIIFE){
 }
 let newLines = [];
 exports.processFiles = function(filePaths, outputFilePath, skipIIFE){
+    constants = {};
     filePaths.forEach(filePath  =>{
         processFile(filePath, newLines, skipIIFE);
     })
